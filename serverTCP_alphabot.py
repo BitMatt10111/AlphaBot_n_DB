@@ -142,7 +142,7 @@ class Client_Manager(thr.Thread):
 
 def main():
     
-    s=sck.socket(sck.AF_INET,sck.SOCK_STREAM) #crea il socket per la trasmissione tcp 
+    s=sck.socket(sck.AF_INET,sck.SOCK_STREAM) #prepara il socket per la trasmissione tcp 
     s.bind(("192.168.0.131",5000))
     s.listen() #si mette in ascolto per un client che si connette
 
