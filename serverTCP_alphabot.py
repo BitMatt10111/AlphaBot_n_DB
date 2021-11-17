@@ -2,10 +2,10 @@ import socket as sck
 import threading as thr 
 import logging
 import time
-import RPi.GPIO as GPIO #import libreria per alphabot
-import sqlite3 #import libreria per sqlite
-class AlphaBot(object):
-    
+import RPi.GPIO as GPIO #libreria per alphabot
+import sqlite3 #libreria per sqlite
+
+class AlphaBot(object): #classe per gestire il moviemento dell'AlphaBot
     def __init__(self, in1=13, in2=12, ena=6, in3=21, in4=20, enb=26):
         self.IN1 = in1
         self.IN2 = in2
@@ -15,7 +15,8 @@ class AlphaBot(object):
         self.ENB = enb
         self.PA  = 25
         self.PB  = 25
-
+        
+        #setup iniziale del bot
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.IN1, GPIO.OUT)
@@ -30,18 +31,17 @@ class AlphaBot(object):
         self.PWMB.start(self.PB)
         self.stop()
 
-    def right(self, sec):
+    def right(self, sec): #funzione che ruota sul posto verso destra il bot per "sec" secondi
         self.PWMA.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
         GPIO.output(self.IN1, GPIO.HIGH)
         GPIO.output(self.IN2, GPIO.LOW)
         GPIO.output(self.IN3, GPIO.HIGH)
         GPIO.output(self.IN4, GPIO.LOW)
-        time.sleep(sec)
-        self.PWMA.ChangeDutyCycle(0)
-        self.PWMB.ChangeDutyCycle(0)
+        time.sleep(sec) #continua a muoversi per la durata del moviemento indicata come parametro
+        self.stop() #dopo aver concluso il movimento si ferma
 
-    def stop(self):
+    def stop(self): #funzione che ferma il bot
         self.PWMA.ChangeDutyCycle(0)
         self.PWMB.ChangeDutyCycle(0)
         GPIO.output(self.IN1, GPIO.LOW)
@@ -49,39 +49,36 @@ class AlphaBot(object):
         GPIO.output(self.IN3, GPIO.LOW)
         GPIO.output(self.IN4, GPIO.LOW)
 
-    def left(self, sec):
+    def left(self, sec): #funzione che ruota sul posto verso sinistra il bot per "sec" secondi
         self.PWMA.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
         GPIO.output(self.IN1, GPIO.LOW)
         GPIO.output(self.IN2, GPIO.HIGH)
         GPIO.output(self.IN3, GPIO.LOW)
         GPIO.output(self.IN4, GPIO.HIGH)
-        time.sleep(sec)
-        self.PWMA.ChangeDutyCycle(0)
-        self.PWMB.ChangeDutyCycle(0)
+        time.sleep(sec) #continua a muoversi per la durata del moviemento indicata come parametro
+        self.stop() #dopo aver concluso il movimento si ferma
 
-    def forward(self, sec, speed=30):
+    def forward(self, sec, speed=30): #funzione che muove avanti il bot per "sec" secondi
         self.PWMA.ChangeDutyCycle(speed)
         self.PWMB.ChangeDutyCycle(speed)
         GPIO.output(self.IN1, GPIO.LOW)
         GPIO.output(self.IN2, GPIO.HIGH)
         GPIO.output(self.IN3, GPIO.HIGH)
         GPIO.output(self.IN4, GPIO.LOW)
-        time.sleep(sec)
-        self.PWMA.ChangeDutyCycle(0)
-        self.PWMB.ChangeDutyCycle(0)
+        time.sleep(sec) #continua a muoversi per la durata del moviemento indicata come parametro
+        self.stop() #dopo aver concluso il movimento si ferma
 
 
-    def backward(self, sec, speed=30):
+    def backward(self, sec, speed=30): #funzione che muove indietro il bot per "sec" secondi
         self.PWMA.ChangeDutyCycle(speed)
         self.PWMB.ChangeDutyCycle(speed)
         GPIO.output(self.IN1, GPIO.HIGH)
         GPIO.output(self.IN2, GPIO.LOW)
         GPIO.output(self.IN3, GPIO.LOW)
         GPIO.output(self.IN4, GPIO.HIGH)
-        time.sleep(sec)
-        self.PWMA.ChangeDutyCycle(0)
-        self.PWMB.ChangeDutyCycle(0)
+        time.sleep(sec) #continua a muoversi per la durata del moviemento indicata come parametro
+        self.stop() #dopo aver concluso il movimento si ferma
         
     def set_pwm_a(self, value):
         self.PA = value
@@ -145,7 +142,7 @@ class Client_Manager(thr.Thread):
 
 def main():
     
-    s=sck.socket(sck.AF_INET,sck.SOCK_STREAM)
+    s=sck.socket(sck.AF_INET,sck.SOCK_STREAM) #crea il socket per la trasmissione tcp 
     s.bind(("192.168.0.131",5000))
     s.listen() #si mette in ascolto per un client che si connette
 
