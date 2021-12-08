@@ -13,7 +13,7 @@ while True:
 ```
 This very short script allow us to:
 
-- set up the socket  for the trasmission
+- set up the socket for the trasmission
 - connect the client to the server
 - take as input the name sequence (ex: Square)
 - send the message to the server
@@ -65,4 +65,10 @@ This script is the function that allow us to manage the client:
 
 - receive the message from the client
 - connect the python file to the SQLite database file
-- make a query to pick the sequence from the movement name
+- make a query to get the sequence from the movement name
+- split the sequence and call the function for each basic movement also saying the duration in second
+
+------
+
+The last step is setup a database with a table with sequences names and the related sequence.
+After that the job is done and your alphabot is ready to go!
