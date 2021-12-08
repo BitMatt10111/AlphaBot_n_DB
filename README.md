@@ -71,5 +71,12 @@ This script is the function that allow us to manage the client:
 ## Step 3 - Setup
 
 The last step is setup a database with a table with sequences names and the related sequence.
-|ciao
-After that the job is done and your alphabot is ready to go!
+For Example:
+| Name  | Sequence |
+| ------------- | ------------- |
+| Square  | F1:L0.5:F1:L0.5:F1:L0.5:F1:L0.5  |
+| Triangle  | F2:R0.6:F2:R0.6:F2:R0.6  |
+
+-----
+
+# After that the job is done and your alphabot is ready to go!
