@@ -68,7 +68,8 @@ This script is the function that allow us to manage the client:
 - make a query to get the sequence from the movement name
 - split the sequence and call the function for each basic movement also saying the duration in second
 
-------
+## Step 3 - Setup
 
 The last step is setup a database with a table with sequences names and the related sequence.
+|ciao
 After that the job is done and your alphabot is ready to go!
